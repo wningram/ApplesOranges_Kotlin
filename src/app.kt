@@ -32,15 +32,32 @@ fun parse_input(input: String?): List<String> {
  	Calculates the cost of a list of products.
  */
 fun calculate_cost(input: List<String>): Double {
-	var totalCost = 0.0
+	var total_cost = 0.0
 	for (item in input) {
 		when (item.toLowerCase()) {
-			"apple" -> totalCost += 0.60
-			"orange" -> totalCost += 0.25
+			"apple" -> total_cost += 0.60
+			"orange" -> total_cost += 0.25
 		}
 	}
 	
-	return totalCost
+	return total_cost
+}
+
+fun calculate_discount(input: List<String>): Double {
+	var total_discount = 0.0
+	var apple_count = 0
+	var orange_count = 0
+	for (item in input) {
+		when (item.toLowerCase()) {
+			"apple" -> apple_count++
+			"orange" -> orange_count++
+		}
+	}
+	
+	total_discount += (apple_count / 2) * 0.60
+	total_discount += (orange_count / 3) * 0.25
+	
+	return total_discount * -1
 }
 
 fun main(args: Array<String>) {
@@ -58,7 +75,11 @@ fun main(args: Array<String>) {
 				"quit" -> run = false
 				"help" -> println(helpText)
 				else -> {
-					val cost = calculate_cost(parse_input(input))
+					val parsed_input = parse_input(input)
+					val discount = calculate_discount(parsed_input)
+					var cost = calculate_cost(parsed_input) + discount
+					
+					println("Discount $discount")
 					println("Total Cost is $cost")
 				}
 			}
