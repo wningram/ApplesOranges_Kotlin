@@ -7,7 +7,15 @@ fun parse_input(input: String): List<String> {
 }
 
 fun cost_calculator(input: List<String>): Double {
+	var totalCost = 0.0
+	for (item in input) {
+		when (item.toLowerCase()) {
+			"apple" -> totalCost += 0.60
+			"orange" -> totalCost += 0.25
+		}
+	}
 	
+	return totalCost
 }
 
 fun main(args: Array<String>) {
