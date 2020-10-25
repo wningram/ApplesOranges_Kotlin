@@ -42,4 +42,6 @@ class Order(var orderInput: List<String>) {
 		
 		return total_cost
 	}
+	
+	override fun toString() = "{\nOrder Id: ${this.id}\nStatus: ${this.status}\nInputs: ${this.orderInput}\n}"
 }
