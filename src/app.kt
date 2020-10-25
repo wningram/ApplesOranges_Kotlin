@@ -29,7 +29,7 @@ fun parse_input(input: String?): List<String> {
 }
 
 /**
- 	Calculates the cost of a list of products.
+ 	DEPRECATED(Use Order.calculateGrossCost). Calculates the cost of a list of products.
  */
 fun calculate_cost(input: List<String>): Double {
 	var total_cost = 0.0
@@ -43,6 +43,9 @@ fun calculate_cost(input: List<String>): Double {
 	return total_cost
 }
 
+/**
+ 	DEPRECATED(Use Order.calculateDiscount). Determines the discount to apply to the overall order. Returns a negative value.
+ */
 fun calculate_discount(input: List<String>): Double {
 	var total_discount = 0.0
 	var apple_count = 0
@@ -62,6 +65,7 @@ fun calculate_discount(input: List<String>): Double {
 
 fun main(args: Array<String>) {
 	val helpText = "Enter a comma separated list of items. Items can be: Apple or Orange."
+	val notifications = NotificationService()
 	var run = true
 	
 	println(helpText)
@@ -74,13 +78,36 @@ fun main(args: Array<String>) {
 			when (input?.toLowerCase()) {
 				"quit" -> run = false
 				"help" -> println(helpText)
+				"debug" -> {
+					println(notifications.orders)
+				}
+				"order" -> {
+					try {
+						val order_num = readLine()?.toInt()
+						if (order_num != null) {
+							val order = notifications.getOrder(order_num)
+							println(order)
+							println("Order Cost: ${order.calculateGrossCost() + order.calculateDiscount()}")
+						}
+					} catch (e: Exception) {
+						println("Invalid input.")
+					}
+				}
 				else -> {
-					val parsed_input = parse_input(input)
-					val discount = calculate_discount(parsed_input)
-					var cost = calculate_cost(parsed_input) + discount
+					val new_order = notifications.registerOrder(Order(parse_input(input)))
+					val discount = new_order.calculateDiscount()
+					var cost = new_order.calculateGrossCost() + discount
 					
-					println("Discount $discount")
-					println("Total Cost is $cost")
+					notifications.processOrder(new_order.id)
+					
+					if (new_order.status) {
+						println("Order ${new_order.id} processed.")
+						println("Discount $discount")
+						println("Total Cost is $cost")
+					} else {
+						println("Order ${new_order.id} not yet processed.")
+					}
+					
 				}
 			}
 		} catch (e: Exception) {
