@@ -104,8 +104,10 @@ fun main(args: Array<String>) {
 						println("Order ${new_order.id} processed.")
 						println("Discount $discount")
 						println("Total Cost is $cost")
+						println("Estimated Delivery Time: ${notifications.getDeliveryTime(new_order.id)}s")
 					} else {
 						println("Order ${new_order.id} not yet processed.")
+						println("Estimated Delivery Time: ${notifications.getDeliveryTime(new_order.id)}s")
 					}
 					
 				}

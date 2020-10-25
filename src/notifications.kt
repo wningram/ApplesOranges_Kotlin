@@ -40,4 +40,21 @@ class NotificationService {
 			throw Exception("Order with specified Id does not exist: $id")
 		}
 	}
+	
+	fun getDeliveryTime(order_id: Int): Int {
+		var delivery_time = 0
+		val current_order = this.getOrder(order_id)
+		if (current_order.status)
+			return 0
+		else {
+			for (order in this.orders) {
+				// Add 10 minutes to delivery time for each order that is not processed
+				// whose Id preceeds the current
+				if (!order.status && order.id < order_id)
+					delivery_time += 10 * 60
+			}
+			
+			return delivery_time
+		}
+	}
 }
