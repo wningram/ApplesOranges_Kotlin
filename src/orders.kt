@@ -31,7 +31,7 @@ class Order(var orderInput: List<String>) {
 	/**
 	 	Calculates the cost of a list of products.
 	 */
-	fun calculateCost(): Double {
+	fun calculateGrossCost(): Double {
 		var total_cost = 0.0
 		for (item in this.orderInput) {
 			when (item.toLowerCase()) {
