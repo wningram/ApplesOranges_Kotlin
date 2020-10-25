@@ -27,4 +27,19 @@ class Order(var orderInput: List<String>) {
 		
 		return total_discount * -1
 	}
+	
+	/**
+	 	Calculates the cost of a list of products.
+	 */
+	fun calculateCost(): Double {
+		var total_cost = 0.0
+		for (item in this.orderInput) {
+			when (item.toLowerCase()) {
+				"apple" -> total_cost += 0.60
+				"orange" -> total_cost += 0.25
+			}
+		}
+		
+		return total_cost
+	}
 }

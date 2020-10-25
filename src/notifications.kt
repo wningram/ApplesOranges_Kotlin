@@ -22,10 +22,11 @@ class NotificationService {
 	}
 	
 	/**
-	 	Adds a new order to the list of orders.
+	 	Adds a new order to the list of orders. Returns the newly registered order.
 	 */
-	fun registerOrder(order: Order): Unit {
+	fun registerOrder(order: Order): Order {
 		this.orders = this.orders + order
+		return order
 	}
 	
 	/**
