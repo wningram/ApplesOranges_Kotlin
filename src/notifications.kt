@@ -26,7 +26,7 @@ class NotificationService {
 	 */
 	fun registerOrder(order: Order): Order {
 		this.orders = this.orders + order
-		return order
+		return this.getOrder(order.id)
 	}
 	
 	/**
