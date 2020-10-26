@@ -1,0 +1,1 @@
+class OutOfStockException(item: String) : Exception(item)
