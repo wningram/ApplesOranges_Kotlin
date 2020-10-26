@@ -77,8 +77,10 @@ fun main(args: Array<String>) {
 		
 		try {
 			when (input?.toLowerCase()) {
+				// Process program commands -------------------
 				"quit" -> run = false
 				"help" -> println(helpText)
+				// Process Debug inputs -----------------------
 				"debug" -> {
 					println(notifications.orders)
 					println("Apples in Stock: ${notifications.stockCountApples}")
@@ -96,6 +98,7 @@ fun main(args: Array<String>) {
 						println("Invalid input.")
 					}
 				}
+				// Process restocking inputs -------------------
 				"restock apples" -> {
 					val restock_count = readLine()?.toInt()
 					if (restock_count != null && restock_count > 0) {
@@ -122,6 +125,7 @@ fun main(args: Array<String>) {
 						}
 					}
 				}
+				// Process orders input -------------------------
 				else -> {
 					val new_order = notifications.registerOrder(Order(parse_input(input)))
 					val discount = new_order.calculateDiscount()
